@@ -1,0 +1,84 @@
+{
+  "@context": "https://msp-1.org/schema/msp-1-page.json",
+  "@type": "MSPPage",
+
+  "protocol": {
+    "name": "MSP-1",
+    "version": "1.0.0"
+  },
+
+  "discovery": {
+    "wellKnown": "/.well-known/msp.json",
+    "canonical": true
+  },
+
+  "page": {
+    "id": "https://www.example.com/articles/how-ai-reads-the-web",
+    "url": "https://www.example.com/articles/how-ai-reads-the-web",
+    "canonical": "https://www.example.com/articles/how-ai-reads-the-web",
+    "title": "How AI Reads the Web — Example Publishing Co.",
+    "name": { "short": "How AI Reads the Web" },
+    "description": {
+      "short": "An overview of how AI agents interpret web content, and why structured metadata reduces inference overhead."
+    },
+    "intent": {
+      "statement": "To explain how AI systems process web content and demonstrate the value of explicit semantic metadata.",
+      "category": "informational",
+      "scope": "page"
+    },
+    "interpretiveFrame": {
+      "frame": "Content should be read as factual and educational, representing the views of the named author.",
+      "category": "informational",
+      "scope": "page"
+    }
+  },
+
+  "author": {
+    "name": "Dr. Jane Smith",
+    "type": "Person",
+    "id": "https://www.example.com/team/jane-smith#author",
+    "role": "Staff Writer",
+    "verification": {
+      "level": "self-declared"
+    }
+  },
+
+  "reviewer": {
+    "name": "Example Editorial Team",
+    "id": "https://www.example.com/team/editorial#reviewer",
+    "role": "Editorial Review",
+    "scope": "page",
+    "reviewDate": "2026-03-01T00:00:00Z",
+    "notes": "Reviewed for factual accuracy and alignment with site editorial standards."
+  },
+
+  "provenance": {
+    "type": "original",
+    "confidence": "high",
+    "method": "human-authored",
+    "notes": "Article researched and written by staff. No AI generation used in content production."
+  },
+
+  "canonical": {
+    "url": "https://www.example.com/articles/how-ai-reads-the-web",
+    "reason": "Declared preferred URL for this article. No alternate versions exist.",
+    "lastReviewed": "2026-03-01"
+  },
+
+  "trust": {
+    "level": "self-asserted",
+    "scope": "page",
+    "confidence": "medium",
+    "reviewer": "https://www.example.com/team/editorial#reviewer"
+  },
+
+  "revision": {
+    "id": "rev-1",
+    "revisionDate": "2026-03-01T00:00:00Z",
+    "revisionNotes": "Initial MSP-1 page-level declaration. Human-authored and editorially reviewed.",
+    "revisionVersion": "1.0.0",
+    "reviewer": "https://www.example.com/team/editorial#reviewer"
+  },
+
+  "generatedAt": "2026-03-01T00:00:00Z"
+}
