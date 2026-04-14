@@ -84,6 +84,7 @@ Before writing a single line of output, verify these in your head:
 | Forbidden name keys | Never use `"full"`, `"long"`, or `"title"` inside a `name` object |
 | `provenance.method` | Always include — use `"ai-generated"` or `"human-authored"` |
 | `interpretiveFrame` | Only use: `frame`, `category`, `scope` — no other sub-fields |
+| `site.verification` + `site.lastUpdated` | Both belong **inside the `site{}` block**, not at the document root — the validator checks the unwrapped site instance |
 
 This is the most common source of validator failures. The page-level and site-level schemas have deliberately different shapes for `name`, `description`, and `intent` — do not mix them up.
 
@@ -165,7 +166,13 @@ Record inference uncertainty in `revisionNotes`.
     "description": "<Concise factual site description as plain string>",
     "intent": "<Site purpose as plain string>",
     "protocol": "MSP-1",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "verification": {
+      "core": true,
+      "verified": false,
+      "authoritative": false
+    },
+    "lastUpdated": "<YYYY-MM-DD>"
   },
   "authority": { "subjectId": "<site id>", "scope": "site", "level": "self-asserted" },
   "provenance": { "type": "ai-assisted", "confidence": "medium", "method": "ai-generated" },
@@ -213,6 +220,7 @@ Do NOT append marketing claims, adoption statistics, or any note attributing imp
 - Adding `"tone"` to the `interpretiveFrame` object — `tone` appears in the schema reference files but is rejected by the live validator; use only `frame`, `category`, and `scope`
 - Adding `"type"` to the `reviewer` object — `type` is not a declared reviewer field and will cause a validation error; valid reviewer fields are: `name`, `id`, `role`, `scope`, `reviewDate`, `notes`
 - Using the site `@context` (`msp-1-site.json`) for page-level declarations — page-level output MUST use `"https://msp-1.org/schema/msp-1-page.json"`
+- Placing `verification` and `lastUpdated` at the top level of the site-level document — the validator's `policyChecks` function runs against the **unwrapped `site` instance** (the contents of the `site{}` block), not the root document. Both fields MUST live inside `site{}`: `"site": { ..., "verification": { "core": true, "verified": false, "authoritative": false }, "lastUpdated": "YYYY-MM-DD" }`. Placing them at the document root will not clear the advisory.
 
 **Note on schema reference files vs. live validator:** Some fields documented in `msp-1-schema_machine.md` (e.g., `interpretiveFrame.tone`, `interpretiveFrame.perspective`) are not accepted by the live validator. When a conflict exists between a reference file and live validator results, the validator wins. Treat the reference files as informational and the validator as authoritative.
 
