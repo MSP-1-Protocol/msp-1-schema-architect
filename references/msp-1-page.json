@@ -1,0 +1,1166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://msp-1.org/schema/msp-1-page.json",
+  "title": "MSP-1 Page Declaration Schema",
+  "description": "JSON Schema for an MSP-1 v1.0.1 page-level declaration. This schema validates clean page declarations while retaining compatibility annotations for legacy fields.",
+  "type": "object",
+  "required": [
+    "@context",
+    "protocol",
+    "page"
+  ],
+  "properties": {
+    "@context": {
+      "description": "Context reference for MSP-1 page declarations.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "object"
+            ]
+          }
+        }
+      ]
+    },
+    "@type": {
+      "description": "Optional JSON-LD type for an MSP-1 page declaration.",
+      "type": "string",
+      "const": "MSPPage"
+    },
+    "protocol": {
+      "$ref": "#/$defs/protocol"
+    },
+    "discovery": {
+      "$ref": "#/$defs/discovery"
+    },
+    "page": {
+      "$ref": "#/$defs/page"
+    },
+    "canonical": {
+      "$ref": "#/$defs/canonical"
+    },
+    "parent": {
+      "$ref": "#/$defs/parent"
+    },
+    "section": {
+      "$ref": "#/$defs/section"
+    },
+    "sections": {
+      "description": "Optional list of section declarations associated with the page.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/section"
+      }
+    },
+    "author": {
+      "$ref": "#/$defs/author"
+    },
+    "reviewer": {
+      "$ref": "#/$defs/reviewer"
+    },
+    "provenance": {
+      "$ref": "#/$defs/provenance"
+    },
+    "authority": {
+      "$ref": "#/$defs/authority"
+    },
+    "trust": {
+      "$ref": "#/$defs/trust"
+    },
+    "revision": {
+      "$ref": "#/$defs/revision"
+    },
+    "compliance": {
+      "description": "Deprecated compatibility field. New MSP-1 v1.0.1 page declarations should omit compliance; validators may surface its presence as an advisory warning.",
+      "deprecated": true,
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "protocol": {
+      "type": "object",
+      "description": "Identifies the MSP-1 protocol and implemented version.",
+      "required": [
+        "name",
+        "version"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "const": "MSP-1"
+        },
+        "version": {
+          "type": "string",
+          "const": "1.0.1",
+          "description": "MSP-1 protocol version implemented by this declaration."
+        },
+        "supportedVersionRange": {
+          "type": "string",
+          "description": "Optional compatibility range for supported MSP-1 versions."
+        },
+        "documentation": {
+          "type": "string",
+          "format": "uri",
+          "description": "Optional URL pointing to MSP-1 documentation or specification material."
+        }
+      },
+      "additionalProperties": true
+    },
+    "discovery": {
+      "type": "object",
+      "description": "Declares the canonical well-known endpoint used to locate the site's MSP-1 declaration.",
+      "required": [
+        "wellKnown",
+        "canonical"
+      ],
+      "properties": {
+        "wellKnown": {
+          "type": "string",
+          "const": "/.well-known/msp.json",
+          "description": "Canonical root-relative MSP-1 well-known declaration path."
+        },
+        "canonical": {
+          "type": "boolean",
+          "const": true,
+          "description": "Boolean endpoint-designation field constrained to true; distinct from the canonical URL term."
+        }
+      },
+      "additionalProperties": false
+    },
+    "page": {
+      "type": "object",
+      "description": "A single web page or page-equivalent resource as an addressable semantic unit within an MSP-1 implementation.",
+      "required": [
+        "id",
+        "url"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Stable identifier for the page within the site or implementation. This may be a URI, slug, UUID, opaque ID, or other stable string."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Primary web-addressable URL for the page or page-equivalent resource."
+        },
+        "title": {
+          "type": "string",
+          "description": "Backward-compatibility field for a human-readable page title. Prefer name for current MSP-1 v1.0.1 naming."
+        },
+        "name": {
+          "$ref": "#/$defs/name"
+        },
+        "description": {
+          "$ref": "#/$defs/description"
+        },
+        "type": {
+          "$ref": "#/$defs/type"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        },
+        "canonical": {
+          "$ref": "#/$defs/canonical"
+        },
+        "parent": {
+          "$ref": "#/$defs/parent"
+        },
+        "section": {
+          "$ref": "#/$defs/section"
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/section"
+          }
+        },
+        "intent": {
+          "$ref": "#/$defs/intent"
+        },
+        "interpretiveFrame": {
+          "$ref": "#/$defs/interpretiveFrame"
+        },
+        "author": {
+          "$ref": "#/$defs/author"
+        },
+        "reviewer": {
+          "$ref": "#/$defs/reviewer"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "authority": {
+          "$ref": "#/$defs/authority"
+        },
+        "trust": {
+          "$ref": "#/$defs/trust"
+        },
+        "revision": {
+          "$ref": "#/$defs/revision"
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "additionalProperties": true
+    },
+    "version": {
+      "type": "string",
+      "description": "Contextual semantic-version string. This is distinct from protocol.version and revision.revisionVersion.",
+      "pattern": "^[0-9]+\\\\.[0-9]+\\\\.[0-9]+$"
+    },
+    "id": {
+      "type": "string",
+      "description": "Stable identifier string."
+    },
+    "type": {
+      "description": "Semantic classifier for the resource or declaration.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      ]
+    },
+    "name": {
+      "description": "Human-readable name or structured naming block.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "required": [
+            "display"
+          ],
+          "properties": {
+            "display": {
+              "type": "string"
+            },
+            "formal": {
+              "type": "string"
+            },
+            "short": {
+              "type": "string"
+            },
+            "alt": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "language": {
+              "type": "string"
+            },
+            "primary": {
+              "type": "string",
+              "enum": [
+                "formal",
+                "display",
+                "short"
+              ]
+            },
+            "scope": {
+              "type": "string"
+            },
+            "lastUpdated": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "description": {
+      "description": "Natural-language resource summary, either as a string or a structured description object.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "required": [
+            "short"
+          ],
+          "properties": {
+            "short": {
+              "type": "string"
+            },
+            "long": {
+              "type": "string"
+            },
+            "alt": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "interpretiveFrame": {
+              "type": "string"
+            },
+            "language": {
+              "type": "string"
+            },
+            "lastUpdated": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "canonical": {
+      "type": "object",
+      "description": "Preferred authoritative URL representation for a resource. This is distinct from discovery.canonical.",
+      "required": [
+        "url"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "lastReviewed": {
+          "type": "string",
+          "format": "date"
+        },
+        "authority": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "additionalProperties": true
+    },
+    "parent": {
+      "type": "object",
+      "description": "Higher-level resource, page, section, collection, or structural context for the current resource.",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "site",
+            "section",
+            "page",
+            "collection",
+            "other"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "relation": {
+          "type": "string",
+          "enum": [
+            "direct",
+            "logical",
+            "organizational"
+          ]
+        },
+        "path": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "depth": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "section": {
+      "type": "object",
+      "description": "Logical or structural subdivision of a page with its own stable identity and optional contextual metadata.",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "name": {
+          "$ref": "#/$defs/name"
+        },
+        "title": {
+          "type": "string",
+          "description": "Compatibility field for a human-readable section title. Prefer name for v1.0.1."
+        },
+        "label": {
+          "type": "string"
+        },
+        "level": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "parent": {
+          "$ref": "#/$defs/parent"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "description": {
+          "$ref": "#/$defs/description"
+        },
+        "intent": {
+          "$ref": "#/$defs/intent"
+        },
+        "interpretiveFrame": {
+          "$ref": "#/$defs/interpretiveFrame"
+        },
+        "order": {
+          "type": "integer"
+        },
+        "subsections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/section"
+          }
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "intent": {
+      "description": "Declared purpose, goal, or intended function of the resource.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "required": [
+            "statement"
+          ],
+          "properties": {
+            "statement": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "informational",
+                "transactional",
+                "navigational",
+                "instructional",
+                "persuasive",
+                "creative",
+                "analytical",
+                "warning",
+                "meta"
+              ]
+            },
+            "audience": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "string"
+            },
+            "motivation": {
+              "type": "string"
+            },
+            "interpretiveFrame": {
+              "type": "string"
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high",
+                "critical"
+              ]
+            },
+            "lastUpdated": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "interpretiveFrame": {
+      "description": "Contextual lens, orientation, assumptions, or boundaries through which the resource should be understood.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "required": [
+            "frame"
+          ],
+          "properties": {
+            "frame": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "informational",
+                "analytical",
+                "creative",
+                "speculative",
+                "instructional",
+                "opinion",
+                "contextual-disclaimer",
+                "safety",
+                "meta",
+                "other"
+              ]
+            },
+            "tone": {
+              "type": "string"
+            },
+            "perspective": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "string"
+            },
+            "appliesToIntent": {
+              "type": "boolean"
+            },
+            "notes": {
+              "type": "string"
+            },
+            "lastUpdated": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "author": {
+      "type": "object",
+      "description": "Human individual or organization primarily responsible for creating or originating the resource.",
+      "required": [
+        "name",
+        "type"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "Person",
+            "Organization"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "role": {
+          "$ref": "#/$defs/role"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "verification": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "reviewer": {
+      "type": "object",
+      "description": "Person, organization, or system that reviewed, audited, evaluated, or approved the resource or declaration.",
+      "required": [
+        "name",
+        "type"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "Person",
+            "Organization",
+            "System"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "role": {
+          "$ref": "#/$defs/role"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "reviewDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "verification": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "role": {
+      "description": "Function, responsibility, or semantic position an entity has in relation to a resource or declaration.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string",
+              "enum": [
+                "authorship",
+                "governance",
+                "review",
+                "operations",
+                "technical",
+                "ownership",
+                "other"
+              ]
+            },
+            "entityType": {
+              "type": "string",
+              "enum": [
+                "Person",
+                "Organization",
+                "System"
+              ]
+            },
+            "scope": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "authorityLevel": {
+              "type": "string",
+              "enum": [
+                "none",
+                "limited",
+                "standard",
+                "elevated",
+                "full"
+              ]
+            },
+            "delegable": {
+              "type": "boolean"
+            },
+            "notes": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "provenance": {
+      "type": "object",
+      "description": "Origin, lineage, creation method, source relationship, and contributor context for the resource.",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "oneOf": [
+            {
+              "type": "string",
+              "enum": [
+                "original",
+                "derived",
+                "aggregated",
+                "ai-assisted",
+                "ai-generated"
+              ]
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "original",
+                  "derived",
+                  "aggregated",
+                  "ai-assisted",
+                  "ai-generated"
+                ]
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            }
+          ]
+        },
+        "source": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "contributors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/id"
+              },
+              "name": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "Person",
+                  "Organization",
+                  "System"
+                ]
+              },
+              "role": {
+                "$ref": "#/$defs/role"
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "authority": {
+      "type": "object",
+      "description": "Scope-bound person, organization, or system holding declared responsibility, stewardship, or decision-making authority.",
+      "required": [
+        "name",
+        "type"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "Person",
+            "Organization",
+            "System"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "jurisdiction": {
+          "type": "string"
+        },
+        "role": {
+          "$ref": "#/$defs/role"
+        },
+        "verification": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "trust": {
+      "type": "object",
+      "description": "Declarative trust-context metadata. It is not a proof of correctness, authority, ranking priority, or reliability by itself.",
+      "required": [
+        "level"
+      ],
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "verified": {
+          "type": "boolean"
+        },
+        "verificationLevel": {
+          "type": "string",
+          "enum": [
+            "self-declared",
+            "verified"
+          ]
+        },
+        "verifiedBy": {
+          "type": "string"
+        },
+        "verificationDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "signals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "auditTrail": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "revision": {
+      "type": "object",
+      "description": "Discrete change event in the lifecycle of the resource.",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "revisionDate": {
+          "$ref": "#/$defs/revisionDate"
+        },
+        "revisionNotes": {
+          "$ref": "#/$defs/revisionNotes"
+        },
+        "revisionVersion": {
+          "$ref": "#/$defs/revisionVersion"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "reviewer": {
+          "$ref": "#/$defs/reviewer"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "relatedChanges": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "deprecated": true,
+          "description": "Compatibility alias. Prefer revisionVersion."
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "deprecated": true,
+          "description": "Compatibility alias. Prefer revisionDate."
+        },
+        "summary": {
+          "type": "string",
+          "deprecated": true,
+          "description": "Compatibility alias. Prefer revisionNotes."
+        },
+        "notes": {
+          "type": "string",
+          "deprecated": true,
+          "description": "Compatibility alias. Prefer revisionNotes."
+        }
+      },
+      "additionalProperties": true
+    },
+    "revisionDate": {
+      "description": "Date or date-time associated with a revision or lifecycle event.",
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date"
+        },
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "object",
+          "required": [
+            "value",
+            "kind"
+          ],
+          "properties": {
+            "value": {
+              "type": "string"
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "created",
+                "updated",
+                "reviewed",
+                "published",
+                "deprecated",
+                "effectiveFrom",
+                "effectiveUntil",
+                "other"
+              ]
+            },
+            "precision": {
+              "type": "string",
+              "enum": [
+                "date",
+                "datetime"
+              ]
+            },
+            "timezone": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "notes": {
+              "type": "string"
+            },
+            "lastUpdated": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "revisionNotes": {
+      "description": "Human-readable explanation of what changed in a revision.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "required": [
+            "notes"
+          ],
+          "properties": {
+            "notes": {
+              "type": "string"
+            },
+            "author": {
+              "type": "string"
+            },
+            "date": {
+              "type": "string",
+              "format": "date"
+            },
+            "context": {
+              "type": "string"
+            },
+            "relatedRevision": {
+              "type": "string"
+            },
+            "confidence": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ]
+            },
+            "additionalDetails": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "revisionVersion": {
+      "description": "Version identifier associated with a revision event. This is distinct from protocol.version.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "required": [
+            "major",
+            "minor",
+            "patch"
+          ],
+          "properties": {
+            "major": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "minor": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "patch": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "label": {
+              "type": "string"
+            },
+            "build": {
+              "type": "string"
+            },
+            "string": {
+              "type": "string"
+            },
+            "isCompatibleWith": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "effectiveDate": {
+              "type": "string",
+              "format": "date"
+            },
+            "notes": {
+              "type": "string"
+            },
+            "channel": {
+              "type": "string",
+              "deprecated": true,
+              "description": "Compatibility alias. Prefer label."
+            }
+          },
+          "additionalProperties": true
+        }
+      ]
+    }
+  },
+  "examples": [
+    {
+      "@context": "https://msp-1.org/schema/msp-1-page.json",
+      "@type": "MSPPage",
+      "protocol": {
+        "name": "MSP-1",
+        "version": "1.0.1"
+      },
+      "discovery": {
+        "wellKnown": "/.well-known/msp.json",
+        "canonical": true
+      },
+      "page": {
+        "id": "protocol-overview",
+        "url": "https://msp-1.org/protocol-overview/",
+        "name": "MSP-1 Protocol Overview",
+        "description": "A concise technical overview of the MSP-1 semantic protocol structure.",
+        "intent": "Explain the purpose and structure of the MSP-1 metadata protocol.",
+        "interpretiveFrame": "Technical documentation lens for MSP-1 implementation guidance."
+      },
+      "provenance": {
+        "type": "original"
+      },
+      "revision": {
+        "id": "rev-2026-06-24",
+        "revisionDate": "2026-06-24",
+        "revisionNotes": "Harmonized page declaration schema for MSP-1 v1.0.1.",
+        "revisionVersion": "1.0.1"
+      }
+    }
+  ]
+}

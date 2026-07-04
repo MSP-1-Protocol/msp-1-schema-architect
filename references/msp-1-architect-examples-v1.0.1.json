@@ -1,0 +1,449 @@
+{
+  "metadata": {
+    "name": "MSP-1 Architect Examples",
+    "version": "1.0.1",
+    "lastUpdated": "2026-07-01",
+    "purpose": "Examples for the MSP-1 Schema Architect v1.0.1: clean page, clean site, homepage both mode, repair, legacy compliance warning, and explicit multi-input batch behavior.",
+    "notes": [
+      "Examples are illustrative and do not replace msp-1-page.json or msp-1-site.json validation.",
+      "New v1.0.1 outputs do not emit compliance.",
+      "Final structural validation should be performed by the MSP-1 Validator."
+    ]
+  },
+  "examples": {
+    "cleanPage": {
+      "mode": "PAGE-LEVEL GENERATION",
+      "input": {
+        "url": "https://example.com/services/"
+      },
+      "outputObject": {
+        "@context": "https://msp-1.org/schema/msp-1-page.json",
+        "@type": "MSPPage",
+        "protocol": {
+          "name": "MSP-1",
+          "version": "1.0.1"
+        },
+        "discovery": {
+          "wellKnown": "/.well-known/msp.json",
+          "canonical": true
+        },
+        "page": {
+          "id": "example-services",
+          "url": "https://example.com/services/",
+          "title": "Services | Example Website",
+          "name": "Services",
+          "description": "A page describing the services offered by Example Website.",
+          "canonical": {
+            "url": "https://example.com/services/"
+          },
+          "intent": {
+            "statement": "Describe available services for prospective clients.",
+            "category": "informational",
+            "scope": "page"
+          },
+          "interpretiveFrame": {
+            "frame": "Content should be interpreted as a factual service overview.",
+            "category": "informational",
+            "scope": "page"
+          }
+        },
+        "provenance": {
+          "type": "ai-assisted",
+          "timestamp": "2026-07-01T00:00:00Z",
+          "notes": "MSP-1 declaration generated from user-provided input; human review recommended."
+        },
+        "revision": {
+          "id": "msp-page-rev-2026-07-01",
+          "revisionDate": "2026-07-01",
+          "revisionNotes": "Initial MSP-1 v1.0.1 page declaration generated from user-provided input; human review recommended.",
+          "revisionVersion": "1.0.1"
+        }
+      },
+      "transport": "Wrap outputObject in <script type=\"application/ld+json\"> and emit inside a fenced html code block."
+    },
+    "cleanSite": {
+      "mode": "SITE-LEVEL GENERATION",
+      "input": {
+        "url": "https://example.com/",
+        "scope": "site"
+      },
+      "outputObject": {
+        "@context": "https://msp-1.org/schema/msp-1-site.json",
+        "@type": "MSPSite",
+        "protocol": {
+          "name": "MSP-1",
+          "version": "1.0.1"
+        },
+        "discovery": {
+          "wellKnown": "/.well-known/msp.json",
+          "canonical": true
+        },
+        "site": {
+          "id": "example-site",
+          "name": "Example Website",
+          "url": "https://example.com/",
+          "description": "A public website for Example Website.",
+          "intent": "Provide publicly accessible information about Example Website and its services.",
+          "canonical": {
+            "url": "https://example.com/"
+          }
+        },
+        "provenance": {
+          "type": "ai-assisted",
+          "timestamp": "2026-07-01T00:00:00Z",
+          "notes": "MSP-1 site declaration generated from user-provided input; human review recommended."
+        },
+        "revision": {
+          "id": "msp-site-rev-2026-07-01",
+          "revisionDate": "2026-07-01",
+          "revisionNotes": "Initial MSP-1 v1.0.1 site declaration generated from user-provided input; human review recommended.",
+          "revisionVersion": "1.0.1"
+        }
+      },
+      "transport": "Emit raw JSON inside a fenced json code block for /.well-known/msp.json."
+    },
+    "homepageBoth": {
+      "mode": "BOTH",
+      "input": {
+        "url": "https://example.com/",
+        "scope": "homepage/root"
+      },
+      "pageOutputObject": {
+        "@context": "https://msp-1.org/schema/msp-1-page.json",
+        "@type": "MSPPage",
+        "protocol": {
+          "name": "MSP-1",
+          "version": "1.0.1"
+        },
+        "discovery": {
+          "wellKnown": "/.well-known/msp.json",
+          "canonical": true
+        },
+        "page": {
+          "id": "example-homepage",
+          "url": "https://example.com/",
+          "title": "Example Website",
+          "name": "Example Website Homepage",
+          "description": "The homepage for Example Website.",
+          "canonical": {
+            "url": "https://example.com/"
+          },
+          "intent": {
+            "statement": "Introduce the website and route visitors to primary information.",
+            "category": "navigational",
+            "scope": "page"
+          },
+          "interpretiveFrame": {
+            "frame": "Content should be interpreted as homepage-level orientation and navigation.",
+            "category": "informational",
+            "scope": "page"
+          }
+        },
+        "provenance": {
+          "type": "ai-assisted",
+          "timestamp": "2026-07-01T00:00:00Z",
+          "notes": "MSP-1 homepage declaration generated from user-provided input; human review recommended."
+        },
+        "revision": {
+          "id": "msp-homepage-rev-2026-07-01",
+          "revisionDate": "2026-07-01",
+          "revisionNotes": "Initial MSP-1 v1.0.1 homepage declaration generated from user-provided input; human review recommended.",
+          "revisionVersion": "1.0.1"
+        }
+      },
+      "siteOutputObject": {
+        "@context": "https://msp-1.org/schema/msp-1-site.json",
+        "@type": "MSPSite",
+        "protocol": {
+          "name": "MSP-1",
+          "version": "1.0.1"
+        },
+        "discovery": {
+          "wellKnown": "/.well-known/msp.json",
+          "canonical": true
+        },
+        "site": {
+          "id": "example-site",
+          "name": "Example Website",
+          "url": "https://example.com/",
+          "description": "A public website for Example Website.",
+          "intent": "Provide publicly accessible information about Example Website and its services.",
+          "canonical": {
+            "url": "https://example.com/"
+          }
+        },
+        "provenance": {
+          "type": "ai-assisted",
+          "timestamp": "2026-07-01T00:00:00Z",
+          "notes": "MSP-1 site declaration generated from user-provided input; human review recommended."
+        },
+        "revision": {
+          "id": "msp-site-rev-2026-07-01",
+          "revisionDate": "2026-07-01",
+          "revisionNotes": "Initial MSP-1 v1.0.1 site declaration generated from user-provided input; human review recommended.",
+          "revisionVersion": "1.0.1"
+        }
+      },
+      "transport": "Emit pageOutputObject first as html JSON-LD, then siteOutputObject as raw json."
+    },
+    "repairLegacySite": {
+      "mode": "REPAIR",
+      "inputObject": {
+        "@context": "https://msp-1.org/schema/msp-1-site.json",
+        "protocol": {
+          "name": "MSP-1",
+          "version": "1.0.0"
+        },
+        "discovery": {
+          "wellKnown": "/.well-known/msp.json",
+          "canonical": true
+        },
+        "site": {
+          "id": "example-site",
+          "name": "Example Website",
+          "url": "https://example.com/",
+          "description": {
+            "short": "An example website."
+          },
+          "intent": {
+            "statement": "Provide informational content.",
+            "category": "informational",
+            "scope": "site"
+          }
+        },
+        "compliance": {
+          "core": true
+        },
+        "trust": {
+          "level": "medium",
+          "verificationLevel": "self-declared"
+        },
+        "revision": {
+          "id": "site-rev-1",
+          "revisionDate": "2025-01-01",
+          "revisionNotes": "Initial MSP-1 site-level declaration.",
+          "revisionVersion": "1.0.0"
+        }
+      },
+      "reviewReport": {
+        "mode": "repair",
+        "mspVersionTarget": "1.0.1",
+        "inputCount": 1,
+        "items": [
+          {
+            "inputRef": "legacy-site-example",
+            "detectedScope": "site",
+            "status": "repairable",
+            "errors": [],
+            "warnings": [
+              {
+                "field": "protocol.version",
+                "severity": "warning",
+                "message": "Legacy MSP-1 version detected; updated to 1.0.1 in repaired output."
+              },
+              {
+                "field": "compliance",
+                "severity": "advisory",
+                "message": "Deprecated compatibility field encountered; removed from repaired v1.0.1 output."
+              }
+            ],
+            "repairsApplied": [
+              "Updated protocol.version to 1.0.1.",
+              "Removed deprecated compliance field.",
+              "Normalized description and intent to lean string forms.",
+              "Updated revision metadata to record repair."
+            ],
+            "humanReviewRecommended": true
+          }
+        ]
+      },
+      "repairedOutputObject": {
+        "@context": "https://msp-1.org/schema/msp-1-site.json",
+        "@type": "MSPSite",
+        "protocol": {
+          "name": "MSP-1",
+          "version": "1.0.1"
+        },
+        "discovery": {
+          "wellKnown": "/.well-known/msp.json",
+          "canonical": true
+        },
+        "site": {
+          "id": "example-site",
+          "name": "Example Website",
+          "url": "https://example.com/",
+          "description": "An example website.",
+          "intent": "Provide informational content."
+        },
+        "trust": {
+          "level": "medium",
+          "verificationLevel": "self-declared"
+        },
+        "revision": {
+          "id": "site-rev-2026-07-01",
+          "revisionDate": "2026-07-01",
+          "revisionNotes": "Repaired legacy MSP-1 declaration for v1.0.1; removed deprecated compliance field and updated protocol version; human review recommended.",
+          "revisionVersion": "1.0.1"
+        },
+        "provenance": {
+          "type": "ai-assisted",
+          "timestamp": "2026-07-01T00:00:00Z",
+          "notes": "MSP-1 repair performed from user-provided legacy declaration."
+        }
+      },
+      "transport": "Emit reviewReport first as json, then repairedOutputObject as raw json."
+    },
+    "legacyComplianceWarning": {
+      "mode": "REVIEW",
+      "inputObject": {
+        "@context": "https://msp-1.org/schema/msp-1-site.json",
+        "protocol": {
+          "name": "MSP-1",
+          "version": "1.0.0"
+        },
+        "discovery": {
+          "wellKnown": "/.well-known/msp.json",
+          "canonical": true
+        },
+        "site": {
+          "id": "example-site",
+          "name": "Example Website",
+          "url": "https://example.com/",
+          "description": {
+            "short": "An example website."
+          },
+          "intent": {
+            "statement": "Provide informational content.",
+            "category": "informational",
+            "scope": "site"
+          }
+        },
+        "compliance": {
+          "core": true
+        },
+        "trust": {
+          "level": "medium",
+          "verificationLevel": "self-declared"
+        },
+        "revision": {
+          "id": "site-rev-1",
+          "revisionDate": "2025-01-01",
+          "revisionNotes": "Initial MSP-1 site-level declaration.",
+          "revisionVersion": "1.0.0"
+        }
+      },
+      "expectedWarning": {
+        "field": "compliance",
+        "severity": "advisory",
+        "message": "Deprecated compatibility field encountered. Do not emit compliance in new MSP-1 v1.0.1 output."
+      },
+      "expectedRepairAction": "Remove compliance unless the user explicitly requests legacy-preserving output."
+    },
+    "multiInputBatch": {
+      "mode": "BATCH ASSIST",
+      "inputLimit": 5,
+      "inputs": [
+        {
+          "url": "https://example.com/services/"
+        },
+        {
+          "url": "https://example.com/about/"
+        }
+      ],
+      "outputObjects": [
+        {
+          "@context": "https://msp-1.org/schema/msp-1-page.json",
+          "@type": "MSPPage",
+          "protocol": {
+            "name": "MSP-1",
+            "version": "1.0.1"
+          },
+          "discovery": {
+            "wellKnown": "/.well-known/msp.json",
+            "canonical": true
+          },
+          "page": {
+            "id": "example-services",
+            "url": "https://example.com/services/",
+            "title": "Services | Example Website",
+            "name": "Services",
+            "description": "A page describing the services offered by Example Website.",
+            "canonical": {
+              "url": "https://example.com/services/"
+            },
+            "intent": {
+              "statement": "Describe available services for prospective clients.",
+              "category": "informational",
+              "scope": "page"
+            },
+            "interpretiveFrame": {
+              "frame": "Content should be interpreted as a factual service overview.",
+              "category": "informational",
+              "scope": "page"
+            }
+          },
+          "provenance": {
+            "type": "ai-assisted",
+            "timestamp": "2026-07-01T00:00:00Z",
+            "notes": "MSP-1 declaration generated from user-provided input; human review recommended."
+          },
+          "revision": {
+            "id": "msp-page-rev-2026-07-01",
+            "revisionDate": "2026-07-01",
+            "revisionNotes": "Initial MSP-1 v1.0.1 page declaration generated from user-provided input; human review recommended.",
+            "revisionVersion": "1.0.1"
+          }
+        },
+        {
+          "@context": "https://msp-1.org/schema/msp-1-page.json",
+          "@type": "MSPPage",
+          "protocol": {
+            "name": "MSP-1",
+            "version": "1.0.1"
+          },
+          "discovery": {
+            "wellKnown": "/.well-known/msp.json",
+            "canonical": true
+          },
+          "page": {
+            "id": "example-about",
+            "url": "https://example.com/about/",
+            "title": "About | Example Website",
+            "name": "About",
+            "description": "A page describing Example Website and its background.",
+            "canonical": {
+              "url": "https://example.com/about/"
+            },
+            "intent": {
+              "statement": "Provide background information about Example Website.",
+              "category": "informational",
+              "scope": "page"
+            },
+            "interpretiveFrame": {
+              "frame": "Content should be interpreted as organizational background information.",
+              "category": "informational",
+              "scope": "page"
+            }
+          },
+          "provenance": {
+            "type": "ai-assisted",
+            "timestamp": "2026-07-01T00:00:00Z",
+            "notes": "MSP-1 declaration generated from user-provided input; human review recommended."
+          },
+          "revision": {
+            "id": "msp-about-rev-2026-07-01",
+            "revisionDate": "2026-07-01",
+            "revisionNotes": "Initial MSP-1 v1.0.1 page declaration generated from user-provided input; human review recommended.",
+            "revisionVersion": "1.0.1"
+          }
+        }
+      ],
+      "rules": [
+        "Process only explicitly supplied URLs/files.",
+        "Do not crawl or discover additional pages.",
+        "Emit each artifact as its own fenced code block.",
+        "If more than 5 inputs are supplied, output the batch-limit failure block."
+      ]
+    }
+  }
+}
