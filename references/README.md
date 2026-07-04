@@ -8,15 +8,14 @@ These files are model-agnostic. They represent the protocol knowledge layer that
 
 | File | Purpose |
 |------|---------|
-| `MSP-1_Technical_Spec.md` | Concise validator-gate rules and field contracts |
-| `msp-1-core-spec_machine.md` | Required and optional fields per entity — normative |
-| `msp-1-schema_machine.md` | Field types, enums, and schema validation structures |
-| `msp-1-namespace_machine.md` | Canonical namespace identifiers |
+| `msp-1-architect-implementation-rules-v1.0.1.md` | Concise implementation rules |
+| `msp-1-architect-runtime-reference-v1.0.1.md` | Machine-facing runtime reference |
+| `msp-1-architect-examples-v1.0.1.json` | Reference examples of site and page-level declarations |
+| `msp-1-page.json` | JSON Schema for an MSP-1 v1.0.1 page-level declaration |
+| `msp-1-site.json` | JSON Schema for an MSP-1 v1.0.1 site-level declaration |
 | `msp-1-implementation-best-practices.md` | Guidance on inference, uncertainty, and correct usage |
 | `msp-1-common-implementation-mistakes.md` | Known failure modes and how to avoid them |
 | `msp-1-quick-start-checklist.md` | Checklist for complete, valid MSP-1 output |
-| `msp-1-inline-example.json` | Reference example of a page-level declaration |
-| `msp-example.json` | Reference example of a site-level declaration |
 
 ## Usage
 
