@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://msp-1.org/schema/msp-1-page.json",
   "title": "MSP-1 Page Declaration Schema",
-  "description": "JSON Schema for an MSP-1 v1.0.1 page-level declaration. This schema validates clean page declarations while retaining compatibility annotations for legacy fields.",
+  "description": "JSON Schema for an MSP-1 v1.0.2 page-level declaration. This schema validates clean page declarations while retaining compatibility annotations for legacy fields.",
   "type": "object",
   "required": [
     "@context",
@@ -79,7 +79,7 @@
       "$ref": "#/$defs/revision"
     },
     "compliance": {
-      "description": "Deprecated compatibility field. New MSP-1 v1.0.1 page declarations should omit compliance; validators may surface its presence as an advisory warning.",
+      "description": "Deprecated compatibility field. New MSP-1 v1.0.2 page declarations should omit compliance; validators may surface its presence as an advisory warning.",
       "deprecated": true,
       "type": "object",
       "additionalProperties": true
@@ -101,7 +101,7 @@
         },
         "version": {
           "type": "string",
-          "const": "1.0.1",
+          "const": "1.0.2",
           "description": "MSP-1 protocol version implemented by this declaration."
         },
         "supportedVersionRange": {
@@ -153,10 +153,6 @@
           "type": "string",
           "format": "uri",
           "description": "Primary web-addressable URL for the page or page-equivalent resource."
-        },
-        "title": {
-          "type": "string",
-          "description": "Backward-compatibility field for a human-readable page title. Prefer name for current MSP-1 v1.0.1 naming."
         },
         "name": {
           "$ref": "#/$defs/name"
@@ -219,7 +215,7 @@
     "version": {
       "type": "string",
       "description": "Contextual semantic-version string. This is distinct from protocol.version and revision.revisionVersion.",
-      "pattern": "^[0-9]+\\\\.[0-9]+\\\\.[0-9]+$"
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
     },
     "id": {
       "type": "string",
@@ -422,10 +418,6 @@
         },
         "name": {
           "$ref": "#/$defs/name"
-        },
-        "title": {
-          "type": "string",
-          "description": "Compatibility field for a human-readable section title. Prefer name for v1.0.1."
         },
         "label": {
           "type": "string"
@@ -1134,11 +1126,11 @@
   },
   "examples": [
     {
-      "@context": "https://msp-1.org/schema/msp-1-page.json",
+      "@context": "https://msp-1.org/context/msp-1-page.jsonld",
       "@type": "MSPPage",
       "protocol": {
         "name": "MSP-1",
-        "version": "1.0.1"
+        "version": "1.0.2"
       },
       "discovery": {
         "wellKnown": "/.well-known/msp.json",
@@ -1158,7 +1150,7 @@
       "revision": {
         "id": "rev-2026-06-24",
         "revisionDate": "2026-06-24",
-        "revisionNotes": "Harmonized page declaration schema for MSP-1 v1.0.1.",
+        "revisionNotes": "Harmonized page declaration schema for MSP-1 v1.0.2.",
         "revisionVersion": "1.0.1"
       }
     }

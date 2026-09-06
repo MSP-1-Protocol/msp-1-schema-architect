@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://msp-1.org/schema/msp-1-site.json",
   "title": "MSP-1 Site Declaration Schema",
-  "description": "JSON Schema for an MSP-1 v1.0.1 site-level declaration. This schema validates clean site declarations and /.well-known/msp.json-style metadata while retaining compatibility handling for older declaration shapes.",
+  "description": "JSON Schema for an MSP-1 v1.0.2 site-level declaration. This schema validates clean site declarations and /.well-known/msp.json-style metadata while retaining compatibility handling for older declaration shapes.",
   "type": "object",
   "required": [
     "@context",
@@ -91,7 +91,7 @@
     "compliance": {
       "$ref": "#/$defs/compliance",
       "deprecated": true,
-      "description": "Deprecated compatibility field. New MSP-1 v1.0.1 site declarations should omit compliance; validators may surface its presence as an advisory warning."
+      "description": "Deprecated compatibility field. New MSP-1 v1.0.2 site declarations should omit compliance; validators may surface its presence as an advisory warning."
     }
   },
   "additionalProperties": true,
@@ -110,7 +110,7 @@
         },
         "version": {
           "type": "string",
-          "const": "1.0.1",
+          "const": "1.0.2",
           "description": "MSP-1 protocol version implemented by this declaration."
         },
         "supportedVersionRange": {
@@ -162,10 +162,6 @@
           "type": "string",
           "format": "uri",
           "description": "Primary web-addressable URL for the page or page-equivalent resource."
-        },
-        "title": {
-          "type": "string",
-          "description": "Backward-compatibility field for a human-readable page title. Prefer name for current MSP-1 v1.0.1 naming."
         },
         "name": {
           "$ref": "#/$defs/name"
@@ -431,10 +427,6 @@
         },
         "name": {
           "$ref": "#/$defs/name"
-        },
-        "title": {
-          "type": "string",
-          "description": "Compatibility field for a human-readable section title. Prefer name for v1.0.1."
         },
         "label": {
           "type": "string"
@@ -1143,7 +1135,7 @@
     "compliance": {
       "type": "object",
       "deprecated": true,
-      "description": "Deprecated compatibility field retained only so legacy MSP-1 compliance declarations can be parsed and surfaced as advisory compatibility information. Do not emit in new MSP-1 v1.0.1 declarations.",
+      "description": "Deprecated compatibility field retained only so legacy MSP-1 compliance declarations can be parsed and surfaced as advisory compatibility information. Do not emit in new MSP-1 v1.0.2 declarations.",
       "properties": {
         "standard": {
           "type": "string",
@@ -1387,7 +1379,7 @@
         "compliance": {
           "$ref": "#/$defs/compliance",
           "deprecated": true,
-          "description": "Deprecated compatibility field. Do not emit in new MSP-1 v1.0.1 declarations."
+          "description": "Deprecated compatibility field. Do not emit in new MSP-1 v1.0.2 declarations."
         }
       },
       "additionalProperties": true
@@ -1395,11 +1387,11 @@
   },
   "examples": [
     {
-      "@context": "https://msp-1.org/schema/msp-1-site.json",
+      "@context": "https://msp-1.org/context/msp-1-site.jsonld",
       "@type": "MSPSite",
       "protocol": {
         "name": "MSP-1",
-        "version": "1.0.1"
+        "version": "1.0.2"
       },
       "discovery": {
         "wellKnown": "/.well-known/msp.json",
@@ -1411,12 +1403,12 @@
         "url": "https://msp-1.org/",
         "description": "An open, AI-first metadata protocol for machine-readable clarity.",
         "intent": "Provide a structured semantic layer that AI agents can reliably interpret.",
-        "version": "1.0.1"
+        "version": "1.0.2"
       },
       "revision": {
         "id": "rev-2026-06-24",
         "revisionDate": "2026-06-24",
-        "revisionNotes": "Harmonized site declaration schema for MSP-1 v1.0.1.",
+        "revisionNotes": "Harmonized site declaration schema for MSP-1 v1.0.2.",
         "revisionVersion": "1.0.1"
       }
     },
@@ -1438,7 +1430,7 @@
       },
       "protocol": {
         "name": "MSP-1",
-        "version": "1.0.1"
+        "version": "1.0.2"
       },
       "site": {
         "id": "example-site",
