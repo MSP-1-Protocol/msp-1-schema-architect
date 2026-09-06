@@ -2,6 +2,8 @@
 
 Status: Guidance (non-normative)  
 Audience: Site owners, implementers, tool builders  
+Protocol baseline: MSP-1 v1.0.2  
+Last updated: 2026-09-06  
 
 ---
 
@@ -39,8 +41,8 @@ Suggested workflow:
 When uncertain, choose the most conservative truthful value.
 
 Examples:
-- Trust: default to `self-asserted` unless independently verified.
-- Authority: avoid “official” or “expert” claims without evidence and scope.
+- Trust: do not emit a trust declaration by default. If supported, use `level` (`low`, `medium`, or `high`) conservatively and keep verification separate through `verificationLevel` (`self-declared` or `verified`).
+- Authority: emit only when supplied, requested, or clearly supported; identify the responsible person, organization, or system and keep the claim scope-bound.
 - Provenance: disclose AI involvement when applicable.
 
 ---
@@ -60,7 +62,8 @@ MSP-1 works best when `id` and `url` remain stable.
 
 - Use canonical URLs when possible.
 - Avoid changing IDs across revisions.
-- If URLs change, use `canonical` and/or redirects consistently.
+- If URLs change, use redirects and the `canonical` object consistently.
+- In v1.0.2, `canonical` should be expressed as an object containing `url`.
 
 ---
 
@@ -87,7 +90,19 @@ Older implementations without `discovery` remain valid.
 
 ---
 
-## 8) Prefer declared discovery over inferred discovery
+## 8) Keep JSON-LD context and validation schema separate
+MSP-1 v1.0.2 uses different resources for semantic resolution and structural validation.
+
+- Page context: `https://msp-1.org/context/msp-1-page.jsonld`
+- Site context: `https://msp-1.org/context/msp-1-site.jsonld`
+- Page schema: `https://msp-1.org/schema/msp-1-page.json`
+- Site schema: `https://msp-1.org/schema/msp-1-site.json`
+
+Use `/context/` resources as `@context`. Use `/schema/` resources for validation. Do not interchange them in new v1.0.2 declarations.
+
+---
+
+## 9) Prefer declared discovery over inferred discovery
 Automated agents and tooling should not rely on filename or path inference to locate MSP-1 declarations.
 
 **Best practice:**
@@ -99,7 +114,7 @@ Inference increases variance and unnecessary processing.
 
 ---
 
-## 9) Validate, then spot-check
+## 10) Validate, then spot-check
 Validation catches structural errors; it cannot catch semantic dishonesty.
 
 Best practice:
@@ -109,7 +124,7 @@ Best practice:
 
 ---
 
-## 10) Don’t treat MSP-1 as SEO markup
+## 11) Don’t treat MSP-1 as SEO markup
 MSP-1 is not a ranking mechanism.
 
 - Avoid promotional language in `description`, `trust`, and `authority`.
@@ -117,17 +132,26 @@ MSP-1 is not a ranking mechanism.
 
 ---
 
-## 11) Misuse harms the ecosystem
+## 12) Treat compliance as deprecated compatibility metadata
+New v1.0.2 declarations should not emit `compliance`.
+
+- When reviewing legacy input, identify `compliance` as deprecated or advisory.
+- Do not automatically convert compliance claims into trust or authority.
+- Preserve meaningful legacy information only when it can be mapped truthfully to an active field without changing meaning.
+
+---
+
+## 13) Misuse harms the ecosystem
 Overstating trust, authority, or provenance undermines MSP-1 adoption.
 
 If you cannot support a claim, do not declare it.
 
 ---
 
-## 12) Tooling notes for GPT and validator builders
+## 14) Tooling notes for GPT and validator builders
 Status: Guidance (non-normative)
 
-### 12.1 Content extraction limitations
+### 14.1 Content extraction limitations
 Automated tools may not have access to fully rendered DOMs (e.g., heavy JavaScript, client-side routing, paywalls).
 
 Best practice:
@@ -140,16 +164,17 @@ Tools must not assume missing content implies absence of intent or authority.
 
 ---
 
-### 12.2 Missing or incomplete `<head>` elements
+### 14.2 Missing or incomplete `<head>` elements
 Pages without `<head>` metadata increase inference risk.
 
 Best practice:
-- Derive title, description, and intent from visible content only when necessary.
+- Derive optional `name`, `description`, and `intent` from visible content only when necessary and supported.
+- Do not invent a `page.title` field; the v1.0.2 page minimum is `id` and `url`.
 - Explicitly note uncertainty in `revisionNotes` when head metadata is absent.
 
 ---
 
-### 12.3 Handling inference and uncertainty
+### 14.3 Handling inference and uncertainty
 All automated MSP-1 generation involves inference.
 
 Tooling SHOULD:
@@ -162,17 +187,18 @@ Example:
 
 ---
 
-### 12.4 Revision metadata for generated output
+### 14.4 Revision metadata for generated output
 When a tool generates MSP-1:
 - Treat generation as a revision event.
 - Populate `revisionDate`.
 - Use `revisionNotes` to disclose automated generation.
+- Use `ai-assisted` provenance for the generated declaration context when applicable.
 
 This supports auditability and transparency.
 
 ---
 
-### 12.5 Validation scope
+### 14.5 Validation scope
 Validators should distinguish between:
 - **Structural validity** (schema compliance)
 - **Semantic plausibility** (truth, scope, intent alignment)
@@ -182,11 +208,11 @@ Semantic evaluation must remain advisory.
 
 ---
 
-### 12.6 Fail safely (required vs optional fields)
+### 14.6 Fail safely (required vs optional fields)
 If **optional** information cannot be derived without guesswork:
 - Prefer omission over fabrication.
-- Prefer `self-asserted` over elevated trust.
-- Prefer neutral interpretive frames.
+- Omit trust unless it is supported; if emitted, keep `level` conservative and verification status separate.
+- Omit interpretive framing unless a neutral frame is supported by the source.
 
 If **required** information cannot be derived:
 - Tools MUST halt generation
@@ -195,9 +221,14 @@ If **required** information cannot be derived:
 
 Silent omission of required fields is not a safe failure mode.
 
+For v1.0.2:
+- A page entity requires `id` and `url`.
+- A site entity requires `id`, `name`, and `url`.
+- A complete declaration also requires the matching `@context` and a `protocol` object identifying MSP-1 v1.0.2.
+
 ---
 
-## 13) Treat generation as compilation, not “best effort”
+## 15) Treat generation as compilation, not “best effort”
 MSP-1 generation tools should behave like compilers, not content assistants.
 
 Best practice:
@@ -206,3 +237,18 @@ Best practice:
 - Deterministic output is preferred over creative recovery
 
 A hard failure is safer than a misleading declaration.
+
+---
+
+## 16) Extend by namespace, not by altering the core
+MSP-1 extensions may add optional semantic structures without expanding or redefining the minimal core.
+
+Best practice:
+- Use a separate, durable extension namespace.
+- Do not place extension terms in the MSP-1 core namespace.
+- Do not redefine or overload core terms.
+- Document the extension context, schema, version, compatibility, and processing behavior.
+- Ensure the core MSP-1 declaration remains useful when the extension is ignored.
+- Treat experimental extensions as optional and non-core.
+
+Undocumented local fields are not an MSP-1 extension.

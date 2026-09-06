@@ -2,6 +2,8 @@
 
 Status: Guidance (non-normative)  
 Audience: Site owners, developers, tool users  
+Protocol baseline: MSP-1 v1.0.2  
+Last updated: 2026-09-06  
 Goal: Baseline MSP-1 adoption with minimal risk and minimal inference
 
 ---
@@ -35,21 +37,32 @@ Goal: Baseline MSP-1 adoption with minimal risk and minimal inference
 - ☐ URL input, or
 - ☐ Pasted HTML source
 
+☐ Use the context that matches declaration scope:
+- ☐ Page: `https://msp-1.org/context/msp-1-page.jsonld`
+- ☐ Site: `https://msp-1.org/context/msp-1-site.jsonld`
+- ☐ Do not use `/schema/` URLs as `@context` in new v1.0.2 declarations
+
 ☐ If homepage or site root:
 - ☐ Generate inline page-level MSP-1
 - ☐ Generate site-level MSP-1 for `/.well-known/msp.json`
 
-☐ Ensure output contains (at minimum):
-- ☐ `protocol` (name + version)
-- ☐ `page` or `site` entity
-- ☐ `page.title` (required for pages)
-- ☐ `page.url`
-- ☐ `page.id`
-- ☐ `page.canonical` (recommended for pages)
+☐ Ensure output contains the schema-required minimum:
+- ☐ `@context`
+- ☐ `protocol.name` set to `MSP-1`
+- ☐ `protocol.version` set to `1.0.2`
+- ☐ A `page` or `site` entity
+- ☐ Page declaration: `page.id` and `page.url`
+- ☐ Site declaration: `site.id`, `site.name`, and `site.url`
+
+☐ Add recommended or contextual fields only when supported:
+- ☐ `page.name` (optional human-readable page label)
+- ☐ `description`
 - ☐ `intent`
+- ☐ `interpretiveFrame`
+- ☐ `canonical` using object form with `url`
 - ☐ `provenance`
 - ☐ `revision`
-- ☐ `trust` (default to conservative)
+- ☐ `trust` only when supported; do not emit it by default
 - ☐ `discovery` (recommended)
 
 ☐ If `discovery` is included:
@@ -58,6 +71,9 @@ Goal: Baseline MSP-1 adoption with minimal risk and minimal inference
 
 Note: Older implementations without `discovery` remain valid.
 
+☐ Confirm deprecated fields are not emitted:
+- ☐ No `compliance` in new v1.0.2 output
+
 ---
 
 ## C) Human Review (Required)
@@ -65,14 +81,18 @@ Note: Older implementations without `discovery` remain valid.
 ☐ Review high-risk fields carefully:
 - ☐ `intent` (is the purpose stated correctly?)
 - ☐ `interpretiveFrame` (factual vs opinion vs editorial?)
-- ☐ `authority` (scope and level truthful?)
-- ☐ `trust` (not overstated?)
+- ☐ `authority` (identity and scope truthful?)
+- ☐ `trust` (supported, not overstated, and distinct from authority?)
 - ☐ `provenance` (AI involvement disclosed if applicable?)
 
-☐ Review title and canonical handling:
-- ☐ `page.title` reflects the actual document title
-- ☐ `page.title` is not paraphrased or promotional
-- ☐ `page.canonical` matches the intended preferred URL
+☐ Review name and canonical handling:
+- ☐ `page.name`, if present, is accurate and non-promotional
+- ☐ `canonical`, if present, is an object containing the intended preferred `url`
+
+☐ Review trust handling when present:
+- ☐ `trust.level` is `low`, `medium`, or `high`
+- ☐ `trust.verificationLevel`, if present, is `self-declared` or `verified`
+- ☐ `verified` is not claimed without support
 
 ☐ Review discovery clarity:
 - ☐ No reliance on inferred filenames
@@ -108,9 +128,12 @@ Note: Older implementations without `discovery` remain valid.
 
 ☐ Validate JSON:
 - ☐ Valid JSON syntax
-- ☐ Conforms to MSP-1 schemas / namespace
-- ☐ No invented or overloaded fields
+- ☐ Conforms to the matching v1.0.2 page or site schema
+- ☐ Resolves through the matching v1.0.2 JSON-LD context
+- ☐ No invented, redefined, or overloaded MSP-1 core terms
+- ☐ Any extension terms are optional, separately namespaced, documented, and gracefully degradable
 - ☐ No missing required fields
+- ☐ No deprecated `compliance` field in new output
 
 ☐ Spot-check semantics:
 - ☐ No unintended claims
@@ -135,6 +158,7 @@ Note: Older implementations without `discovery` remain valid.
 - ☐ No Schema.org dependency implied
 - ☐ MSP-1 stands alone
 - ☐ Discovery does not rely on inference or probing
+- ☐ Ignoring any optional extension does not impair the core declaration
 
 ---
 

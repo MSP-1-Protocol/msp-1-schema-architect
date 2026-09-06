@@ -2,6 +2,8 @@
 
 Status: Guidance (non-normative)  
 Audience: Site owners, developers, tool builders  
+Protocol baseline: MSP-1 v1.0.2  
+Last updated: 2026-09-06  
 Purpose: Prevent avoidable errors and misuse
 
 ---
@@ -24,7 +26,7 @@ Use neutral, factual language. Declare what *is*, not what you hope systems will
 Inflated trust claims undermine the entire trust signal layer.
 
 **Better approach:**  
-Default to `self-asserted`. Elevate trust only when evidence exists and scope is clear.
+Do not emit trust by default. When trust context is supported, use `level` (`low`, `medium`, or `high`) conservatively. Express verification separately through `verificationLevel` (`self-declared` or `verified`). Keep authority in the `authority` term rather than encoding it as a trust level.
 
 ---
 
@@ -87,14 +89,14 @@ Always update `revisionDate` and `revisionNotes` when MSP-1 changes.
 
 ---
 
-## 8) Inventing or extending MSP-1 terms
-**Mistake:** Adding fields or redefining existing terms to fit local needs.
+## 8) Inventing or overloading MSP-1 core terms
+**Mistake:** Adding undocumented fields to the MSP-1 core namespace or redefining existing terms to fit local needs.
 
 **Why it’s a problem:**  
 It breaks interoperability and tool compatibility.
 
 **Better approach:**  
-Use only defined MSP-1 terms. If something doesn’t fit, omit it or document externally.
+Use only defined MSP-1 core terms in a core declaration. If additional semantics are needed, use a documented, optional extension with its own namespace, context, schema, version, and graceful-degradation behavior. Do not present local fields as MSP-1 core.
 
 ---
 
@@ -160,15 +162,14 @@ Revisit MSP-1 whenever:
 
 ---
 
-## 14) Omitting required page fields (e.g., `page.title`)
-**Mistake:** Publishing page-level MSP-1 without required page fields, especially `page.title`.
+## 14) Omitting required page or site fields
+**Mistake:** Publishing a page without `page.id` and `page.url`, or a site without `site.id`, `site.name`, and `site.url`.
 
 **Why it’s a problem:**  
 Missing required fields cause schema validation failure and force downstream systems to fall back to inference.
 
 **Better approach:**  
-Ensure all required page fields are always present.  
-`page.title` should reflect the document title exactly and must never be omitted.
+Ensure the correct required fields are present for the declared scope. `page.name` is optional and may be added as an accurate human-readable label. Do not invent or require `page.title` in new v1.0.2 output.
 
 ---
 
@@ -183,6 +184,28 @@ Treat MSP-1 generation like compilation:
 - Required fields must always be emitted  
 - Missing data should halt output or be explicitly documented  
 - Determinism is preferred over creativity  
+
+---
+
+## 16) Using a schema URL as `@context`
+**Mistake:** Using `https://msp-1.org/schema/msp-1-page.json` or `https://msp-1.org/schema/msp-1-site.json` as the JSON-LD context for new v1.0.2 output.
+
+**Why it’s a problem:**  
+JSON-LD context resolution and JSON Schema validation are separate functions in v1.0.2. A schema URL is not the active semantic context resource.
+
+**Better approach:**  
+Use the matching `/context/` JSON-LD resource in `@context`, and use the matching `/schema/` resource only for structural validation. Treat schema-as-context usage in v1.0.1 declarations as legacy compatibility input rather than silently copying it into new output.
+
+---
+
+## 17) Emitting deprecated compliance metadata
+**Mistake:** Adding `compliance` to a new v1.0.2 declaration or treating it as a required conformance signal.
+
+**Why it’s a problem:**  
+`compliance` is deprecated compatibility metadata. Reusing it can blur the distinction between validation, trust, and authority.
+
+**Better approach:**  
+Omit `compliance` from new output. When reviewing legacy declarations, surface it as an advisory and preserve meaningful information only when it maps truthfully to an active field without changing meaning.
 
 ---
 
