@@ -1,0 +1,41 @@
+{
+  "@context": "https://msp-1.org/context/msp-1-site.jsonld",
+  "@type": "MSPSite",
+  "protocol": {
+    "name": "MSP-1",
+    "version": "1.0.2"
+  },
+  "site": {
+    "id": "https://github.com/MSP-1-Protocol/msp-1-schema-architect",
+    "name": "MSP-1 Schema Architect",
+    "url": "https://github.com/MSP-1-Protocol/msp-1-schema-architect",
+    "description": "Canonical definition of the MSP-1 Schema Architect role, maintained independently of any specific LLM platform.",
+    "intent": "Provide model-agnostic role definitions, prompts, skills, and shared references for generating valid, schema-compliant MSP-1 declarations from URLs or raw HTML.",
+    "interpretiveFrame": {
+      "frame": "Interpret this repository as the canonical definition and implementation reference for the MSP-1 Schema Architect role. It does not define the MSP-1 protocol itself or replace the canonical MSP-1 schemas.",
+      "category": "informational",
+      "scope": "repository"
+    },
+    "canonical": {
+      "url": "https://github.com/MSP-1-Protocol/msp-1-schema-architect"
+    }
+  },
+  "authority": {
+    "name": "MSP-1",
+    "type": "Organization",
+    "id": "https://github.com/MSP-1-Protocol",
+    "scope": "Stewardship of this repository and its published contents."
+  },
+  "provenance": {
+    "type": "ai-assisted",
+    "source": "https://github.com/MSP-1-Protocol/msp-1-schema-architect",
+    "timestamp": "2026-09-13T19:54:00-04:00",
+    "notes": "Initial repository-root MSP-1 declaration generated from the public repository and its published description or README for publisher review."
+  },
+  "revision": {
+    "id": "repo-msp-rev-2026-09-13",
+    "revisionDate": "2026-09-13",
+    "revisionNotes": "Initial repository-root MSP-1 declaration for the GitHub repository convention; generated from current public repository content for publisher review.",
+    "revisionVersion": "1.0.0"
+  }
+}
